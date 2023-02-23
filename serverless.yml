@@ -1,0 +1,42 @@
+service: aws-node-http-api-project
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-south-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Put
+            - dynamodb:Get
+          Resource:
+            - "Fn::GetAtt": [ TodoTable, Arn ]
+
+functions:
+  add: 
+    handler: build/index.add
+    events: 
+      - httpApi:
+          path: / 
+          method: post 
+
+resources: 
+  Resources:
+    TodoTable: 
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: todos 
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id 
+            AttributeType: S
+        KeySchema: 
+          - AttributeName: id 
+            KeyType: HASH
+
