@@ -25,6 +25,9 @@ functions:
       - httpApi:
           path: / 
           method: post 
+      - httpApi:
+          path: /{id}
+          method: get
 
 resources: 
   Resources:

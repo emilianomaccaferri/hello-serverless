@@ -1,14 +1,13 @@
 import { v4 } from 'uuid';
 import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb';
 import { HttpEvent } from '../types/HttpEvent';
-import { Todo } from '../types/models/Todo';
-import HTTPError from '../types/HTTPError';
+import { TodoBody } from '../types/models/dto/todo/item';
 
 const client = new DynamoDBClient({
   region: 'eu-south-1'
 })
 
-export const addHandler = async (event: HttpEvent<{ todo: Todo }>) => {
+export const addHandler = async (event: HttpEvent<{ todo: TodoBody }>) => {
 
   const { todo } = event.body;
   const created_at = new Date();

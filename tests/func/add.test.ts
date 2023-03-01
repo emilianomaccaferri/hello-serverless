@@ -4,15 +4,24 @@ import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 
 const db = mockClient(DynamoDBClient);
 
+beforeEach(() => {
+    db.reset();
+})
+
 describe('testing add handler', () => {
 
-    const event = {
-        body: {
-            todo: {
-                title: 'ciao'
+    it('should be ok', async () => {
+
+        const event = {
+            body: {
+                todo: {
+                    title: 'ciao'
+                }
             }
         }
-    }
-    addHandler(event as any);
+        const result = await addHandler(event as any);
+        expect(result.statusCode).toBe(200);
+
+    });
 
 })
