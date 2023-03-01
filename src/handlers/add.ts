@@ -24,7 +24,7 @@ export const addHandler = async (event: HttpEvent<{ todo: Todo }>) => {
     }
   })
 
-  client.send(put_cmd)
+  await client.send(put_cmd)
 
   return {
     statusCode: 200,
